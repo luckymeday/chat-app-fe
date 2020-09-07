@@ -22,12 +22,12 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-    socket.on("message", function (msg) {
-      const k = uuidv4()
+    socket.on("message", function ({ user, message }) {
+      const id = uuidv4()
       messagesRef.current = [...messagesRef.current, {
-        user: msg.user,
-        message: msg.message,
-        id: k
+        user,
+        message,
+        id
       }]
       setMessages(messagesRef.current)
     })
@@ -46,7 +46,7 @@ function App() {
   }
 
   const renderMessages = (messages) => {
-    return messages.map(e => <Message key={e.id} uuid={e.id} obj={e} user={user} />)
+    return messages.map(e => <Message key={e.id} obj={e} user={user} />)
   }
 
   return (
@@ -62,14 +62,14 @@ function App() {
 }
 
 
-const Message = (props) => {
+const Message = ({ obj, user }) => {
   return <p>
     <span
-      className={props.obj.user === props.user ? 'red' : 'black'}
+      className={obj.user === user ? 'red' : 'black'}
       style={{ fontWeight: 'bold' }}>
-      {props.obj.user}
+      {obj.user}
     </span>
-      : {props.uuid}</p>
+      : {obj.message}</p>
 }
 
 export default App;
