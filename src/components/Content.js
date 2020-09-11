@@ -23,6 +23,7 @@ const Messages = ({ user }) => {
   React.useEffect(() => {
     socket.on("chatHistory", function (history) {
       messagesRef.current = history;
+      document.getElementById("messages").scrollTop = 700;
       setMessages(history);
     });
   }, []);
@@ -64,19 +65,23 @@ const Messages = ({ user }) => {
 };
 
 const Message = ({ obj, user }) => {
-  return (
-    <div className="message">
-      <span
-        className={obj.user._id === user._id ? "blue" : "black"}
-        style={{ fontWeight: "bold" }}
-      >
-        {obj.user.name}
-      </span>
-      <span className={obj.user._id === user._id ? "blue" : "black"}>
-        {obj.user._id === user._id ? obj.chat + " :" : " : " + obj.chat}
-      </span>
-    </div>
-  );
+  if (obj.type === "image") {
+    return <img src={`${obj.chat}`} alt="somethingwrong" />;
+  } else if (obj.type === "string") {
+    return (
+      <div className="message">
+        <span
+          className={obj.user._id === user._id ? "blue" : "black"}
+          style={{ fontWeight: "bold" }}
+        >
+          {obj.user.name}
+        </span>
+        <span className={obj.user._id === user._id ? "blue" : "black"}>
+          {obj.user._id === user._id ? obj.chat + " :" : " : " + obj.chat}
+        </span>
+      </div>
+    );
+  }
 };
 
 export default Content;

@@ -15,7 +15,7 @@ export default function ChatInput() {
       form.append("file", file);
       form.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
       const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/ddvtfamv3/image/upload",
+        "https://api.cloudinary.com/v1_1/ddvtfamv3/upload",
         form
       );
       console.log(res.data);
