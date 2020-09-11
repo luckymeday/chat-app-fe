@@ -18,7 +18,7 @@ export default function ChatInput() {
         "https://api.cloudinary.com/v1_1/ddvtfamv3/upload",
         form
       );
-      console.log(res.data);
+      console.log(res);
       if (res.status.toString().startsWith("2")) {
         socket.emit("sendMessage", {
           type: "image",
